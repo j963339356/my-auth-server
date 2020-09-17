@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.auth.demo.mbg.mapper.MapUserresourceMapper">
+  <resultMap id="BaseResultMap" type="com.auth.demo.mbg.model.MapUserresource">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="resource_id" jdbcType="VARCHAR" property="resourceId" />
+    <result column="sys_del" jdbcType="INTEGER" property="sysDel" />
+    <result column="sys_cjr" jdbcType="VARCHAR" property="sysCjr" />
+    <result column="sys_cjsj" jdbcType="TIMESTAMP" property="sysCjsj" />
+    <result column="sys_xgr" jdbcType="VARCHAR" property="sysXgr" />
+    <result column="sys_xgsj" jdbcType="TIMESTAMP" property="sysXgsj" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, user_id, resource_id, sys_del, sys_cjr, sys_cjsj, sys_xgr, sys_xgsj
+  </sql>
+  <select id="selectByExample" parameterType="com.auth.demo.mbg.model.MapUserresourceExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from map_userresource
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from map_userresource
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from map_userresource
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.auth.demo.mbg.model.MapUserresourceExample">
+    delete from map_userresource
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.auth.demo.mbg.model.MapUserresource">
+    insert into map_userresource (id, user_id, resource_id, 
+      sys_del, sys_cjr, sys_cjsj, 
+      sys_xgr, sys_xgsj)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{resourceId,jdbcType=VARCHAR}, 
+      #{sysDel,jdbcType=INTEGER}, #{sysCjr,jdbcType=VARCHAR}, #{sysCjsj,jdbcType=TIMESTAMP}, 
+      #{sysXgr,jdbcType=VARCHAR}, #{sysXgsj,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.auth.demo.mbg.model.MapUserresource">
+    insert into map_userresource
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="resourceId != null">
+        resource_id,
+      </if>
+      <if test="sysDel != null">
+        sys_del,
+      </if>
+      <if test="sysCjr != null">
+        sys_cjr,
+      </if>
+      <if test="sysCjsj != null">
+        sys_cjsj,
+      </if>
+      <if test="sysXgr != null">
+        sys_xgr,
+      </if>
+      <if test="sysXgsj != null">
+        sys_xgsj,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceId != null">
+        #{resourceId,jdbcType=VARCHAR},
+      </if>
+      <if test="sysDel != null">
+        #{sysDel,jdbcType=INTEGER},
+      </if>
+      <if test="sysCjr != null">
+        #{sysCjr,jdbcType=VARCHAR},
+      </if>
+      <if test="sysCjsj != null">
+        #{sysCjsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sysXgr != null">
+        #{sysXgr,jdbcType=VARCHAR},
+      </if>
+      <if test="sysXgsj != null">
+        #{sysXgsj,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.auth.demo.mbg.model.MapUserresourceExample" resultType="java.lang.Long">
+    select count(*) from map_userresource
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update map_userresource
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resourceId != null">
+        resource_id = #{record.resourceId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sysDel != null">
+        sys_del = #{record.sysDel,jdbcType=INTEGER},
+      </if>
+      <if test="record.sysCjr != null">
+        sys_cjr = #{record.sysCjr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sysCjsj != null">
+        sys_cjsj = #{record.sysCjsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sysXgr != null">
+        sys_xgr = #{record.sysXgr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sysXgsj != null">
+        sys_xgsj = #{record.sysXgsj,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update map_userresource
+    set id = #{record.id,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      resource_id = #{record.resourceId,jdbcType=VARCHAR},
+      sys_del = #{record.sysDel,jdbcType=INTEGER},
+      sys_cjr = #{record.sysCjr,jdbcType=VARCHAR},
+      sys_cjsj = #{record.sysCjsj,jdbcType=TIMESTAMP},
+      sys_xgr = #{record.sysXgr,jdbcType=VARCHAR},
+      sys_xgsj = #{record.sysXgsj,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.auth.demo.mbg.model.MapUserresource">
+    update map_userresource
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceId != null">
+        resource_id = #{resourceId,jdbcType=VARCHAR},
+      </if>
+      <if test="sysDel != null">
+        sys_del = #{sysDel,jdbcType=INTEGER},
+      </if>
+      <if test="sysCjr != null">
+        sys_cjr = #{sysCjr,jdbcType=VARCHAR},
+      </if>
+      <if test="sysCjsj != null">
+        sys_cjsj = #{sysCjsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sysXgr != null">
+        sys_xgr = #{sysXgr,jdbcType=VARCHAR},
+      </if>
+      <if test="sysXgsj != null">
+        sys_xgsj = #{sysXgsj,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.auth.demo.mbg.model.MapUserresource">
+    update map_userresource
+    set user_id = #{userId,jdbcType=VARCHAR},
+      resource_id = #{resourceId,jdbcType=VARCHAR},
+      sys_del = #{sysDel,jdbcType=INTEGER},
+      sys_cjr = #{sysCjr,jdbcType=VARCHAR},
+      sys_cjsj = #{sysCjsj,jdbcType=TIMESTAMP},
+      sys_xgr = #{sysXgr,jdbcType=VARCHAR},
+      sys_xgsj = #{sysXgsj,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
