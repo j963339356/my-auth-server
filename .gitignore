@@ -6,6 +6,7 @@ target/
 !**/src/test/**
 
 **/src/**/application.yml
+**/src/**/dataSource.properties
 
 ### STS ###
 .apt_generated
