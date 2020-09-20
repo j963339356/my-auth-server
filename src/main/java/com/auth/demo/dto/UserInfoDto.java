@@ -25,26 +25,32 @@ public class UserInfoDto extends Userinfo {
         private static final long serialVersionUID = 1L;
 
 
+        @Override
         public Date getExpirydate() {
             return expirydate;
         }
 
+        @Override
         public void setExpirydate(Date expirydate) {
             this.expirydate = expirydate;
         }
 
+        @Override
         public Date getSysCjsj() {
             return sysCjsj;
         }
 
+        @Override
         public void setSysCjsj(Date sysCjsj) {
             this.sysCjsj = sysCjsj;
         }
 
+        @Override
         public Date getSysXgsj() {
             return sysXgsj;
         }
 
+        @Override
         public void setSysXgsj(Date sysXgsj) {
             this.sysXgsj = sysXgsj;
         }
