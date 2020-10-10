@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.auth.mbg.mapper.UmsRoleServiceRelationMapper">
+  <resultMap id="BaseResultMap" type="com.auth.mbg.model.UmsRoleServiceRelation">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="service_id" jdbcType="BIGINT" property="serviceId" />
+    <result column="role_id" jdbcType="BIGINT" property="roleId" />
+    <result column="sys_del" jdbcType="INTEGER" property="sysDel" />
+    <result column="sys_create_user" jdbcType="VARCHAR" property="sysCreateUser" />
+    <result column="sys_create_time" jdbcType="TIMESTAMP" property="sysCreateTime" />
+    <result column="sys_modify_user" jdbcType="VARCHAR" property="sysModifyUser" />
+    <result column="sys_modify_time" jdbcType="TIMESTAMP" property="sysModifyTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, service_id, role_id, sys_del, sys_create_user, sys_create_time, sys_modify_user, 
+    sys_modify_time
+  </sql>
+  <select id="selectByExample" parameterType="com.auth.mbg.model.UmsRoleServiceRelationExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ums_role_service_relation
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ums_role_service_relation
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ums_role_service_relation
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.auth.mbg.model.UmsRoleServiceRelationExample">
+    delete from ums_role_service_relation
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.auth.mbg.model.UmsRoleServiceRelation">
+    insert into ums_role_service_relation (id, service_id, role_id, 
+      sys_del, sys_create_user, sys_create_time, 
+      sys_modify_user, sys_modify_time)
+    values (#{id,jdbcType=BIGINT}, #{serviceId,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}, 
+      #{sysDel,jdbcType=INTEGER}, #{sysCreateUser,jdbcType=VARCHAR}, #{sysCreateTime,jdbcType=TIMESTAMP}, 
+      #{sysModifyUser,jdbcType=VARCHAR}, #{sysModifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.auth.mbg.model.UmsRoleServiceRelation">
+    insert into ums_role_service_relation
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="serviceId != null">
+        service_id,
+      </if>
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="sysDel != null">
+        sys_del,
+      </if>
+      <if test="sysCreateUser != null">
+        sys_create_user,
+      </if>
+      <if test="sysCreateTime != null">
+        sys_create_time,
+      </if>
+      <if test="sysModifyUser != null">
+        sys_modify_user,
+      </if>
+      <if test="sysModifyTime != null">
+        sys_modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="serviceId != null">
+        #{serviceId,jdbcType=BIGINT},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="sysDel != null">
+        #{sysDel,jdbcType=INTEGER},
+      </if>
+      <if test="sysCreateUser != null">
+        #{sysCreateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="sysCreateTime != null">
+        #{sysCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sysModifyUser != null">
+        #{sysModifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="sysModifyTime != null">
+        #{sysModifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.auth.mbg.model.UmsRoleServiceRelationExample" resultType="java.lang.Long">
+    select count(*) from ums_role_service_relation
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ums_role_service_relation
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.serviceId != null">
+        service_id = #{record.serviceId,jdbcType=BIGINT},
+      </if>
+      <if test="record.roleId != null">
+        role_id = #{record.roleId,jdbcType=BIGINT},
+      </if>
+      <if test="record.sysDel != null">
+        sys_del = #{record.sysDel,jdbcType=INTEGER},
+      </if>
+      <if test="record.sysCreateUser != null">
+        sys_create_user = #{record.sysCreateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sysCreateTime != null">
+        sys_create_time = #{record.sysCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sysModifyUser != null">
+        sys_modify_user = #{record.sysModifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sysModifyTime != null">
+        sys_modify_time = #{record.sysModifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ums_role_service_relation
+    set id = #{record.id,jdbcType=BIGINT},
+      service_id = #{record.serviceId,jdbcType=BIGINT},
+      role_id = #{record.roleId,jdbcType=BIGINT},
+      sys_del = #{record.sysDel,jdbcType=INTEGER},
+      sys_create_user = #{record.sysCreateUser,jdbcType=VARCHAR},
+      sys_create_time = #{record.sysCreateTime,jdbcType=TIMESTAMP},
+      sys_modify_user = #{record.sysModifyUser,jdbcType=VARCHAR},
+      sys_modify_time = #{record.sysModifyTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.auth.mbg.model.UmsRoleServiceRelation">
+    update ums_role_service_relation
+    <set>
+      <if test="serviceId != null">
+        service_id = #{serviceId,jdbcType=BIGINT},
+      </if>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="sysDel != null">
+        sys_del = #{sysDel,jdbcType=INTEGER},
+      </if>
+      <if test="sysCreateUser != null">
+        sys_create_user = #{sysCreateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="sysCreateTime != null">
+        sys_create_time = #{sysCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sysModifyUser != null">
+        sys_modify_user = #{sysModifyUser,jdbcType=VARCHAR},
+      </if>
+      <if test="sysModifyTime != null">
+        sys_modify_time = #{sysModifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.auth.mbg.model.UmsRoleServiceRelation">
+    update ums_role_service_relation
+    set service_id = #{serviceId,jdbcType=BIGINT},
+      role_id = #{roleId,jdbcType=BIGINT},
+      sys_del = #{sysDel,jdbcType=INTEGER},
+      sys_create_user = #{sysCreateUser,jdbcType=VARCHAR},
+      sys_create_time = #{sysCreateTime,jdbcType=TIMESTAMP},
+      sys_modify_user = #{sysModifyUser,jdbcType=VARCHAR},
+      sys_modify_time = #{sysModifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
