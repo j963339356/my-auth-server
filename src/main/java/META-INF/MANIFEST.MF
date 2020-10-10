@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Main-Class: com.auth.demo.DemoApplication
+Main-Class: com.auth.DemoApplication
 Class-Path: tomcat-embed-websocket-9.0.34.jar spring-jcl-5.2.6.RELEASE.j
  ar pagehelper-5.1.8.jar spring-tx-5.2.6.RELEASE.jar spring-core-5.2.6.R
  ELEASE.jar spring-webmvc-5.2.6.RELEASE.jar jboss-logging-3.4.1.Final.ja

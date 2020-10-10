@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.auth.module_ums.dao.UserInfoValidDao" >
+    <resultMap id="UserInfoValidMap" type="com.auth.mbg.model.UmsUser" extends="com.auth.mbg.mapper.UmsUserMapper.BaseResultMap">
+
+    </resultMap>
+    <select id="validUserUsername" parameterType="java.lang.String" resultType="integer">
+        select count(1) from umsuser where username = #{username,jdbcType=VARCHAR}
+    </select>
+</mapper>
