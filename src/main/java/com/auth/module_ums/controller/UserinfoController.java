@@ -99,7 +99,7 @@ public class UserinfoController {
 
 
     @ApiOperation("删除单个用户")
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult<Object> delUser(@PathVariable("id") long id){
         CommonResult commonResult;
