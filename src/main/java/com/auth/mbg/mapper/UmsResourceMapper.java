@@ -10,7 +10,7 @@ public interface UmsResourceMapper {
 
     int deleteByExample(UmsResourceExample example);
 
-    int deleteByPrimaryKey(String code);
+    int deleteByPrimaryKey(String id);
 
     int insert(UmsResource record);
 
@@ -18,7 +18,7 @@ public interface UmsResourceMapper {
 
     List<UmsResource> selectByExample(UmsResourceExample example);
 
-    UmsResource selectByPrimaryKey(String code);
+    UmsResource selectByPrimaryKey(String id);
 
     int updateByExampleSelective(@Param("record") UmsResource record, @Param("example") UmsResourceExample example);
 

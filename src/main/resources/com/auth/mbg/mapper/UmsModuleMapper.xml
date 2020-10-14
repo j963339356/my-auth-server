@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.auth.mbg.mapper.UmsResourceMapper">
-  <resultMap id="BaseResultMap" type="com.auth.mbg.model.UmsResource">
-    <id column="id" jdbcType="VARCHAR" property="id" />
-    <result column="pid" jdbcType="VARCHAR" property="pid" />
-    <result column="code" jdbcType="VARCHAR" property="code" />
+<mapper namespace="com.auth.mbg.mapper.UmsModuleMapper">
+  <resultMap id="BaseResultMap" type="com.auth.mbg.model.UmsModule">
+    <id column="id" jdbcType="BIGINT" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="url" jdbcType="VARCHAR" property="url" />
-    <result column="menu_id" jdbcType="VARCHAR" property="menuId" />
     <result column="isactive" jdbcType="INTEGER" property="isactive" />
-    <result column="request" jdbcType="VARCHAR" property="request" />
-    <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="type" jdbcType="INTEGER" property="type" />
-    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="hidden" jdbcType="INTEGER" property="hidden" />
     <result column="sys_del" jdbcType="INTEGER" property="sysDel" />
     <result column="sys_create_user" jdbcType="VARCHAR" property="sysCreateUser" />
     <result column="sys_create_time" jdbcType="TIMESTAMP" property="sysCreateTime" />
@@ -78,16 +72,16 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, pid, code, name, url, menu_id, isactive, request, description, type, sort, sys_del, 
-    sys_create_user, sys_create_time, sys_modify_user, sys_modify_time
+    id, name, url, isactive, hidden, sys_del, sys_create_user, sys_create_time, sys_modify_user, 
+    sys_modify_time
   </sql>
-  <select id="selectByExample" parameterType="com.auth.mbg.model.UmsResourceExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.auth.mbg.model.UmsModuleExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from ums_resource
+    from ums_module
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -95,47 +89,37 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from ums_resource
-    where id = #{id,jdbcType=VARCHAR}
+    from ums_module
+    where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from ums_resource
-    where id = #{id,jdbcType=VARCHAR}
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ums_module
+    where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="com.auth.mbg.model.UmsResourceExample">
-    delete from ums_resource
+  <delete id="deleteByExample" parameterType="com.auth.mbg.model.UmsModuleExample">
+    delete from ums_module
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.auth.mbg.model.UmsResource">
-    insert into ums_resource (id, pid, code, 
-      name, url, menu_id, 
-      isactive, request, description, 
-      type, sort, sys_del, 
+  <insert id="insert" parameterType="com.auth.mbg.model.UmsModule">
+    insert into ums_module (id, name, url, 
+      isactive, hidden, sys_del, 
       sys_create_user, sys_create_time, sys_modify_user, 
       sys_modify_time)
-    values (#{id,jdbcType=VARCHAR}, #{pid,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, 
-      #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{menuId,jdbcType=VARCHAR}, 
-      #{isactive,jdbcType=INTEGER}, #{request,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{type,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, #{sysDel,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{isactive,jdbcType=INTEGER}, #{hidden,jdbcType=INTEGER}, #{sysDel,jdbcType=INTEGER}, 
       #{sysCreateUser,jdbcType=VARCHAR}, #{sysCreateTime,jdbcType=TIMESTAMP}, #{sysModifyUser,jdbcType=VARCHAR}, 
       #{sysModifyTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.auth.mbg.model.UmsResource">
-    insert into ums_resource
+  <insert id="insertSelective" parameterType="com.auth.mbg.model.UmsModule">
+    insert into ums_module
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
-      </if>
-      <if test="pid != null">
-        pid,
-      </if>
-      <if test="code != null">
-        code,
       </if>
       <if test="name != null">
         name,
@@ -143,23 +127,11 @@
       <if test="url != null">
         url,
       </if>
-      <if test="menuId != null">
-        menu_id,
-      </if>
       <if test="isactive != null">
         isactive,
       </if>
-      <if test="request != null">
-        request,
-      </if>
-      <if test="description != null">
-        description,
-      </if>
-      <if test="type != null">
-        type,
-      </if>
-      <if test="sort != null">
-        sort,
+      <if test="hidden != null">
+        hidden,
       </if>
       <if test="sysDel != null">
         sys_del,
@@ -179,13 +151,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
-        #{id,jdbcType=VARCHAR},
-      </if>
-      <if test="pid != null">
-        #{pid,jdbcType=VARCHAR},
-      </if>
-      <if test="code != null">
-        #{code,jdbcType=VARCHAR},
+        #{id,jdbcType=BIGINT},
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
@@ -193,23 +159,11 @@
       <if test="url != null">
         #{url,jdbcType=VARCHAR},
       </if>
-      <if test="menuId != null">
-        #{menuId,jdbcType=VARCHAR},
-      </if>
       <if test="isactive != null">
         #{isactive,jdbcType=INTEGER},
       </if>
-      <if test="request != null">
-        #{request,jdbcType=VARCHAR},
-      </if>
-      <if test="description != null">
-        #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        #{type,jdbcType=INTEGER},
-      </if>
-      <if test="sort != null">
-        #{sort,jdbcType=INTEGER},
+      <if test="hidden != null">
+        #{hidden,jdbcType=INTEGER},
       </if>
       <if test="sysDel != null">
         #{sysDel,jdbcType=INTEGER},
@@ -228,23 +182,17 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.auth.mbg.model.UmsResourceExample" resultType="java.lang.Long">
-    select count(*) from ums_resource
+  <select id="countByExample" parameterType="com.auth.mbg.model.UmsModuleExample" resultType="java.lang.Long">
+    select count(*) from ums_module
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update ums_resource
+    update ums_module
     <set>
       <if test="record.id != null">
-        id = #{record.id,jdbcType=VARCHAR},
-      </if>
-      <if test="record.pid != null">
-        pid = #{record.pid,jdbcType=VARCHAR},
-      </if>
-      <if test="record.code != null">
-        code = #{record.code,jdbcType=VARCHAR},
+        id = #{record.id,jdbcType=BIGINT},
       </if>
       <if test="record.name != null">
         name = #{record.name,jdbcType=VARCHAR},
@@ -252,23 +200,11 @@
       <if test="record.url != null">
         url = #{record.url,jdbcType=VARCHAR},
       </if>
-      <if test="record.menuId != null">
-        menu_id = #{record.menuId,jdbcType=VARCHAR},
-      </if>
       <if test="record.isactive != null">
         isactive = #{record.isactive,jdbcType=INTEGER},
       </if>
-      <if test="record.request != null">
-        request = #{record.request,jdbcType=VARCHAR},
-      </if>
-      <if test="record.description != null">
-        description = #{record.description,jdbcType=VARCHAR},
-      </if>
-      <if test="record.type != null">
-        type = #{record.type,jdbcType=INTEGER},
-      </if>
-      <if test="record.sort != null">
-        sort = #{record.sort,jdbcType=INTEGER},
+      <if test="record.hidden != null">
+        hidden = #{record.hidden,jdbcType=INTEGER},
       </if>
       <if test="record.sysDel != null">
         sys_del = #{record.sysDel,jdbcType=INTEGER},
@@ -291,18 +227,12 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update ums_resource
-    set id = #{record.id,jdbcType=VARCHAR},
-      pid = #{record.pid,jdbcType=VARCHAR},
-      code = #{record.code,jdbcType=VARCHAR},
+    update ums_module
+    set id = #{record.id,jdbcType=BIGINT},
       name = #{record.name,jdbcType=VARCHAR},
       url = #{record.url,jdbcType=VARCHAR},
-      menu_id = #{record.menuId,jdbcType=VARCHAR},
       isactive = #{record.isactive,jdbcType=INTEGER},
-      request = #{record.request,jdbcType=VARCHAR},
-      description = #{record.description,jdbcType=VARCHAR},
-      type = #{record.type,jdbcType=INTEGER},
-      sort = #{record.sort,jdbcType=INTEGER},
+      hidden = #{record.hidden,jdbcType=INTEGER},
       sys_del = #{record.sysDel,jdbcType=INTEGER},
       sys_create_user = #{record.sysCreateUser,jdbcType=VARCHAR},
       sys_create_time = #{record.sysCreateTime,jdbcType=TIMESTAMP},
@@ -312,38 +242,20 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.auth.mbg.model.UmsResource">
-    update ums_resource
+  <update id="updateByPrimaryKeySelective" parameterType="com.auth.mbg.model.UmsModule">
+    update ums_module
     <set>
-      <if test="pid != null">
-        pid = #{pid,jdbcType=VARCHAR},
-      </if>
-      <if test="code != null">
-        code = #{code,jdbcType=VARCHAR},
-      </if>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
       <if test="url != null">
         url = #{url,jdbcType=VARCHAR},
       </if>
-      <if test="menuId != null">
-        menu_id = #{menuId,jdbcType=VARCHAR},
-      </if>
       <if test="isactive != null">
         isactive = #{isactive,jdbcType=INTEGER},
       </if>
-      <if test="request != null">
-        request = #{request,jdbcType=VARCHAR},
-      </if>
-      <if test="description != null">
-        description = #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="type != null">
-        type = #{type,jdbcType=INTEGER},
-      </if>
-      <if test="sort != null">
-        sort = #{sort,jdbcType=INTEGER},
+      <if test="hidden != null">
+        hidden = #{hidden,jdbcType=INTEGER},
       </if>
       <if test="sysDel != null">
         sys_del = #{sysDel,jdbcType=INTEGER},
@@ -361,25 +273,19 @@
         sys_modify_time = #{sysModifyTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.auth.mbg.model.UmsResource">
-    update ums_resource
-    set pid = #{pid,jdbcType=VARCHAR},
-      code = #{code,jdbcType=VARCHAR},
-      name = #{name,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="com.auth.mbg.model.UmsModule">
+    update ums_module
+    set name = #{name,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR},
-      menu_id = #{menuId,jdbcType=VARCHAR},
       isactive = #{isactive,jdbcType=INTEGER},
-      request = #{request,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR},
-      type = #{type,jdbcType=INTEGER},
-      sort = #{sort,jdbcType=INTEGER},
+      hidden = #{hidden,jdbcType=INTEGER},
       sys_del = #{sysDel,jdbcType=INTEGER},
       sys_create_user = #{sysCreateUser,jdbcType=VARCHAR},
       sys_create_time = #{sysCreateTime,jdbcType=TIMESTAMP},
       sys_modify_user = #{sysModifyUser,jdbcType=VARCHAR},
       sys_modify_time = #{sysModifyTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

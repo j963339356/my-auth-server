@@ -1,8 +1,13 @@
 package com.auth.module_ums.service.impl;
 
+import com.auth.common.CommonPage;
 import com.auth.mbg.mapper.UmsResourceMapper;
+import com.auth.mbg.model.UmsMenu;
+import com.auth.mbg.model.UmsMenuExample;
 import com.auth.mbg.model.UmsResource;
+import com.auth.mbg.model.UmsResourceExample;
 import com.auth.module_ums.service.UmsResourceService;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +38,9 @@ public class UmsResourceServiceImpl implements UmsResourceService {
      */
     @Override
     public int update(String id, UmsResource umsResource) {
-        return 0;
+        umsResource.setId(id);
+        umsResource.setSysModifyTime(new Date());
+        return umsResourceMapper.updateByPrimaryKeySelective(umsResource);
     }
 
     /**
@@ -43,7 +50,7 @@ public class UmsResourceServiceImpl implements UmsResourceService {
      */
     @Override
     public UmsResource getUmsResource(String id) {
-        return null;
+        return umsResourceMapper.selectByPrimaryKey(id);
     }
 
     /**
@@ -53,7 +60,7 @@ public class UmsResourceServiceImpl implements UmsResourceService {
      */
     @Override
     public int delete(String id) {
-        return 0;
+        return umsResourceMapper.deleteByPrimaryKey(id);
     }
 
     /**
@@ -64,8 +71,32 @@ public class UmsResourceServiceImpl implements UmsResourceService {
      * @param pageSize
      */
     @Override
-    public List<UmsResource> list(UmsResource umsResource, int pageNum, int pageSize) {
-        return null;
+    public CommonPage list(UmsResource umsResource, int pageNum, int pageSize) {
+        UmsResourceExample example = new UmsResourceExample();
+        UmsResourceExample.Criteria criteria = example.createCriteria();
+        example.setOrderByClause("sort desc");
+        if(umsResource.getName()!=null && !umsResource.getName().isEmpty()){
+            criteria.andNameLike("%"+umsResource.getName()+"%");
+        }
+        if(umsResource.getIsactive()!=null){
+            criteria.andIsactiveEqualTo(umsResource.getIsactive());
+        }
+        if(umsResource.getUrl()!=null && !umsResource.getUrl().isEmpty()){
+            criteria.andUrlLike("%"+umsResource.getUrl()+"%");
+        }
+        criteria.andSysDelEqualTo(1);
+
+        long total = umsResourceMapper.countByExample(example);
+        //分页,这个判断防止出现分页错乱
+        if(total > pageSize) {
+            PageHelper.startPage(pageNum, pageSize);
+        }else{
+            pageNum = 1;
+        }
+
+        List<UmsResource> umsResources = umsResourceMapper.selectByExample(example);
+
+        return CommonPage.result(pageNum,pageSize,new Double(total/pageSize+1).intValue(),total,umsResources);
     }
 
     /**
@@ -73,6 +104,6 @@ public class UmsResourceServiceImpl implements UmsResourceService {
      */
     @Override
     public List<UmsResource> listAll() {
-        return null;
+        return umsResourceMapper.selectByExample(new UmsResourceExample());
     }
 }

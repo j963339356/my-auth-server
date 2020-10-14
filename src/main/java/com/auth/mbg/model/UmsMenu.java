@@ -10,6 +10,9 @@ public class UmsMenu implements Serializable {
     @ApiModelProperty(value = "父资源id")
     private String pid;
 
+    @ApiModelProperty(value = "模块表ID")
+    private Long moduleId;
+
     private String title;
 
     private Integer level;
@@ -55,6 +58,14 @@ public class UmsMenu implements Serializable {
 
     public void setPid(String pid) {
         this.pid = pid;
+    }
+
+    public Long getModuleId() {
+        return moduleId;
+    }
+
+    public void setModuleId(Long moduleId) {
+        this.moduleId = moduleId;
     }
 
     public String getTitle() {
@@ -153,6 +164,7 @@ public class UmsMenu implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", pid=").append(pid);
+        sb.append(", moduleId=").append(moduleId);
         sb.append(", title=").append(title);
         sb.append(", level=").append(level);
         sb.append(", sort=").append(sort);

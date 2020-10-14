@@ -4,9 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.auth.common.CommonPage;
 import com.auth.common.CommonResult;
 import com.auth.common.ResultCodeEnum;
-import com.auth.mbg.model.UmsResource;
-import com.auth.module_ums.service.UmsResourceService;
-import com.auth.module_ums.service.UmsResourceService;
+import com.auth.mbg.model.UmsModule;
+import com.auth.module_ums.service.UmsModuleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -17,98 +16,96 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * 资源管理
- * @author xiaofa
+ * 模块管理
  */
 @Controller
-@Api(tags = "ResourceController", description = "资源管理")
-@RequestMapping("/api/resource")
-public class ResourceController {
+@Api(tags = "UmsModuleController", description = "后台用户模块管理")
+@RequestMapping("/api/module")
+public class ModuleController {
     @Autowired
-    UmsResourceService umsResourceService;
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ResourceController.class);
+    private UmsModuleService umsModuleService;
+    private static final Logger LOGGER = LoggerFactory.getLogger(ModuleController.class);
 
     /**
-     * 分页获取资源信息
+     * 分页获取模块信息
      * @return
      */
-    @ApiOperation("获取资源列表")
+    @ApiOperation("获取模块列表")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<CommonPage<UmsResource>> list(@ApiParam("页码") @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+    public CommonResult<CommonPage<UmsModule>> list(@ApiParam("页码") @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
                                                   @ApiParam("页数") @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
                                                   @ApiParam("查询条件") @RequestParam(value = "queryData") String query){
-        UmsResource querData = JSONObject.parseObject(query, UmsResource.class);
+        UmsModule querData = JSONObject.parseObject(query, UmsModule.class);
 
-        CommonPage list = umsResourceService.list(querData,pageNum,pageSize);
+        CommonPage list = umsModuleService.list(querData,pageNum,pageSize);
         return CommonResult.success(list);
     }
 
     /**
-     * 通过id获取资源信息
-     * @param id 资源id
+     * 通过id获取模块信息
+     * @param id 模块id
      */
-    @ApiOperation("获取单个资源信息")
+    @ApiOperation("获取单个模块信息")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<UmsResource> getResource(@PathVariable("id") String id){
-        return CommonResult.success(umsResourceService.getUmsResource(id));
+    public CommonResult<UmsModule> getModule(@PathVariable("id") Long id){
+        return CommonResult.success(umsModuleService.getUmsModule(id));
     }
 
     /**
-     * 添加资源信息
-     * @param umsMenu 资源信息
+     * 添加模块信息
+     * @param umsMenu 模块信息
      * @return
      */
-    @ApiOperation("添加资源信息")
+    @ApiOperation("添加模块信息")
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult<Object> insertUmsResource(@RequestBody UmsResource umsMenu){
+    public CommonResult<Object> insertUmsModule(@RequestBody UmsModule umsMenu){
         CommonResult commonResult;
-        int count = umsResourceService.insert(umsMenu);
+        int count = umsModuleService.insert(umsMenu);
         if(count==1) {
             commonResult = CommonResult.success(ResultCodeEnum.SUCCESS);
-            LOGGER.debug("添加资源成功：{}",umsMenu);
+            LOGGER.debug("添加模块成功：{}",umsMenu);
         }
         else{
             commonResult = CommonResult.faild(ResultCodeEnum.FAILED);
-            LOGGER.debug("添加资源失败：{}",umsMenu);
+            LOGGER.debug("添加模块失败：{}",umsMenu);
         }
         return commonResult;
     }
 
-    @ApiOperation("修改资源信息")
+    @ApiOperation("修改模块信息")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult<Object> updateUser(@PathVariable("id") String id, @RequestBody UmsResource umsMenu){
+    public CommonResult<Object> updateModule(@PathVariable("id") Long id, @RequestBody UmsModule umsMenu){
         CommonResult commonResult;
-        int count = umsResourceService.update(id,umsMenu);
+        int count = umsModuleService.update(id,umsMenu);
         if(count==1) {
             commonResult = CommonResult.success(ResultCodeEnum.SUCCESS);
-            LOGGER.info("修改资源成功");
+            LOGGER.info("修改模块成功");
         }
         else{
             commonResult = CommonResult.faild(ResultCodeEnum.FAILED);
-            LOGGER.info("修改资源失败");
+            LOGGER.info("修改模块失败");
         }
         return commonResult;
     }
 
 
-    @ApiOperation("删除单个资源")
+    @ApiOperation("删除单个模块")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult<Object> delUser(@PathVariable("id") String id){
+    public CommonResult<Object> delModule(@PathVariable("id") Long id){
         CommonResult commonResult;
-        int count = umsResourceService.delete(id);
+        int count = umsModuleService.delete(id);
         if(count==1) {
             commonResult = CommonResult.success(ResultCodeEnum.SUCCESS);
-            LOGGER.info("删除资源成功");
+            LOGGER.info("删除模块成功");
         }
         else{
             commonResult = CommonResult.faild(ResultCodeEnum.FAILED);
-            LOGGER.info("删除资源失败");
+            LOGGER.info("删除模块失败");
         }
         return commonResult;
     }

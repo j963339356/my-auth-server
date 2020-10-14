@@ -54,6 +54,9 @@ public class UmsMenuServiceImpl implements UmsMenuService {
         if(umsMenu.getPid()!=null && !umsMenu.getPid().isEmpty()){
             criteria.andPidEqualTo(umsMenu.getPid());
         }
+        if(umsMenu.getModuleId()!=null){
+            criteria.andModuleIdEqualTo(umsMenu.getModuleId());
+        }
         criteria.andSysDelEqualTo(1);
 
         long total = umsMenuMapper.countByExample(example);
@@ -140,14 +143,11 @@ public class UmsMenuServiceImpl implements UmsMenuService {
     @Override
     public List<UmsMenuNodeDto> treeList(String pid) {
         UmsMenuExample example = new UmsMenuExample();
-        if(pid!=null && !pid.isEmpty()) {
-            example.createCriteria().andPidEqualTo(pid);
-        }
         List<UmsMenu> menuList = umsMenuMapper.selectByExample(example);
         //转换成流，做流操作
         List<UmsMenuNodeDto> result = menuList.stream()
                 //过滤，得到子菜单
-                .filter(subMenu -> subMenu.getPid().equals("0"))
+                .filter(subMenu -> subMenu.getPid().equals(pid==null||pid.isEmpty()?"0":pid))
                 //递归重复如上操作
                 .map(subMenu -> covertMenuNode(subMenu, menuList))
                 //将流中的元素变成List数据结构

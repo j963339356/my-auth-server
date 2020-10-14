@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.auth.mbg.model.UmsMenu">
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="pid" jdbcType="VARCHAR" property="pid" />
+    <result column="module_id" jdbcType="BIGINT" property="moduleId" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="level" jdbcType="INTEGER" property="level" />
     <result column="sort" jdbcType="INTEGER" property="sort" />
@@ -75,8 +76,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, pid, title, level, sort, name, icon, hidden, sys_del, sys_create_user, sys_create_time, 
-    sys_modify_user, sys_modify_time
+    id, pid, module_id, title, level, sort, name, icon, hidden, sys_del, sys_create_user, 
+    sys_create_time, sys_modify_user, sys_modify_time
   </sql>
   <select id="selectByExample" parameterType="com.auth.mbg.model.UmsMenuExample" resultMap="BaseResultMap">
     select
@@ -109,16 +110,16 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.auth.mbg.model.UmsMenu">
-    insert into ums_menu (id, pid, title, 
-      level, sort, name, 
-      icon, hidden, sys_del, 
-      sys_create_user, sys_create_time, sys_modify_user, 
-      sys_modify_time)
-    values (#{id,jdbcType=VARCHAR}, #{pid,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
-      #{level,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
-      #{icon,jdbcType=VARCHAR}, #{hidden,jdbcType=INTEGER}, #{sysDel,jdbcType=INTEGER}, 
-      #{sysCreateUser,jdbcType=VARCHAR}, #{sysCreateTime,jdbcType=TIMESTAMP}, #{sysModifyUser,jdbcType=VARCHAR}, 
-      #{sysModifyTime,jdbcType=TIMESTAMP})
+    insert into ums_menu (id, pid, module_id, 
+      title, level, sort, 
+      name, icon, hidden, 
+      sys_del, sys_create_user, sys_create_time, 
+      sys_modify_user, sys_modify_time)
+    values (#{id,jdbcType=VARCHAR}, #{pid,jdbcType=VARCHAR}, #{moduleId,jdbcType=BIGINT}, 
+      #{title,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, #{hidden,jdbcType=INTEGER}, 
+      #{sysDel,jdbcType=INTEGER}, #{sysCreateUser,jdbcType=VARCHAR}, #{sysCreateTime,jdbcType=TIMESTAMP}, 
+      #{sysModifyUser,jdbcType=VARCHAR}, #{sysModifyTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.auth.mbg.model.UmsMenu">
     insert into ums_menu
@@ -128,6 +129,9 @@
       </if>
       <if test="pid != null">
         pid,
+      </if>
+      <if test="moduleId != null">
+        module_id,
       </if>
       <if test="title != null">
         title,
@@ -169,6 +173,9 @@
       </if>
       <if test="pid != null">
         #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleId != null">
+        #{moduleId,jdbcType=BIGINT},
       </if>
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
@@ -220,6 +227,9 @@
       <if test="record.pid != null">
         pid = #{record.pid,jdbcType=VARCHAR},
       </if>
+      <if test="record.moduleId != null">
+        module_id = #{record.moduleId,jdbcType=BIGINT},
+      </if>
       <if test="record.title != null">
         title = #{record.title,jdbcType=VARCHAR},
       </if>
@@ -262,6 +272,7 @@
     update ums_menu
     set id = #{record.id,jdbcType=VARCHAR},
       pid = #{record.pid,jdbcType=VARCHAR},
+      module_id = #{record.moduleId,jdbcType=BIGINT},
       title = #{record.title,jdbcType=VARCHAR},
       level = #{record.level,jdbcType=INTEGER},
       sort = #{record.sort,jdbcType=INTEGER},
@@ -282,6 +293,9 @@
     <set>
       <if test="pid != null">
         pid = #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleId != null">
+        module_id = #{moduleId,jdbcType=BIGINT},
       </if>
       <if test="title != null">
         title = #{title,jdbcType=VARCHAR},
@@ -322,6 +336,7 @@
   <update id="updateByPrimaryKey" parameterType="com.auth.mbg.model.UmsMenu">
     update ums_menu
     set pid = #{pid,jdbcType=VARCHAR},
+      module_id = #{moduleId,jdbcType=BIGINT},
       title = #{title,jdbcType=VARCHAR},
       level = #{level,jdbcType=INTEGER},
       sort = #{sort,jdbcType=INTEGER},

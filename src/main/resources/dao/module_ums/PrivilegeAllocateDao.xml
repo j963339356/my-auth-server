@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.auth.module_ums.dao.PrivilegeAllocateDao" >
+    <resultMap id="BaseResultMap" type="com.auth.module_ums.dto.PrivilegeAllocateDto">
+        <result column="moduleId" jdbcType="BIGINT" property="moduleId" />
+        <result column="moduleName" jdbcType="VARCHAR" property="moduleName" />
+        <result column="menuId" jdbcType="VARCHAR" property="menuId" />
+        <result column="menuTitle" jdbcType="VARCHAR" property="menuTitle" />
+        <result column="menu2Id" jdbcType="VARCHAR" property="menu2Id" />
+        <result column="menu2Title" jdbcType="VARCHAR" property="menu2Title" />
+        <result column="resourceId" jdbcType="VARCHAR" property="resourceId" />
+        <result column="resourceName" jdbcType="VARCHAR" property="resourceName" />
+    </resultMap>
+    <select id="privilegeAllocate" resultMap="BaseResultMap">
+        select module.id moduleId,module.name moduleName,menu.id menuId,menu.title menuTitle,menu2.id menu2Id,menu2.title menu2Title,resource.id resourceId,resource.name resourceName
+        from ums_module module
+        right join ums_menu menu on module.id=menu.module_id
+        right join ums_menu menu2 on menu.id=menu2.pid
+        right join ums_resource resource on menu2.id=resource.menu_id and resource.isactive=1;
+    </select>
+</mapper>

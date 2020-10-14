@@ -1,5 +1,6 @@
 package com.auth.module_ums.service;
 
+import com.auth.common.CommonPage;
 import com.auth.mbg.model.UmsMenu;
 import com.auth.mbg.model.UmsResource;
 
@@ -29,7 +30,7 @@ public interface UmsResourceService {
     /**
      * 分页查询资源
      */
-    List<UmsResource> list(UmsResource umsResource, int pageNum, int pageSize);
+    CommonPage list(UmsResource umsResource, int pageNum, int pageSize);
 
     /**
      * 查询全部资源

@@ -5,6 +5,7 @@ import com.auth.common.CommonPage;
 import com.auth.common.CommonResult;
 import com.auth.common.ResultCodeEnum;
 import com.auth.mbg.model.UmsMenu;
+import com.auth.mbg.model.UmsResource;
 import com.auth.module_ums.dto.UmsMenuNodeDto;
 import com.auth.module_ums.service.UmsMenuService;
 import io.swagger.annotations.Api;
@@ -20,6 +21,7 @@ import java.util.List;
 
 /**
  * 菜单管理
+ * @author xiaofa
  */
 @Controller
 @Api(tags = "MenuController", description = "菜单管理")
@@ -28,8 +30,17 @@ public class MenuController {
     @Autowired
     UmsMenuService umsMenuService;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserinfoController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MenuController.class);
 
+    /**
+     * 获取所有菜单
+     */
+    @ApiOperation("获取所有菜单列表")
+    @RequestMapping(value = "/listAll", method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<List<UmsMenu>> listAll(){
+        return CommonResult.success(umsMenuService.listAllUmsMenu());
+    }
     /**
      * 分页获取菜单信息
      * @return

@@ -4,37 +4,21 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 import java.util.Date;
 
-public class UmsResource implements Serializable {
-    private String id;
+public class UmsModule implements Serializable {
+    @ApiModelProperty(value = "ID")
+    private Long id;
 
-    @ApiModelProperty(value = "父资源id")
-    private String pid;
-
-    @ApiModelProperty(value = "资源编号")
-    private String code;
-
-    @ApiModelProperty(value = "资源名称")
+    @ApiModelProperty(value = "服务名")
     private String name;
 
-    @ApiModelProperty(value = "资源地址")
+    @ApiModelProperty(value = "地址")
     private String url;
-
-    private String menuId;
 
     @ApiModelProperty(value = "是否激活:1激活,0未激活")
     private Integer isactive;
 
-    @ApiModelProperty(value = "请求类型，POST，GET")
-    private String request;
-
-    @ApiModelProperty(value = "描述")
-    private String description;
-
-    @ApiModelProperty(value = "是否目录，0->模块；1->菜单；2->按钮（接口绑定权限）")
-    private Integer type;
-
-    @ApiModelProperty(value = "排序")
-    private Integer sort;
+    @ApiModelProperty(value = "0隐藏,1显示")
+    private Integer hidden;
 
     @ApiModelProperty(value = "是否删除,1正常,0删除")
     private Integer sysDel;
@@ -53,28 +37,12 @@ public class UmsResource implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getPid() {
-        return pid;
-    }
-
-    public void setPid(String pid) {
-        this.pid = pid;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     public String getName() {
@@ -93,14 +61,6 @@ public class UmsResource implements Serializable {
         this.url = url;
     }
 
-    public String getMenuId() {
-        return menuId;
-    }
-
-    public void setMenuId(String menuId) {
-        this.menuId = menuId;
-    }
-
     public Integer getIsactive() {
         return isactive;
     }
@@ -109,36 +69,12 @@ public class UmsResource implements Serializable {
         this.isactive = isactive;
     }
 
-    public String getRequest() {
-        return request;
+    public Integer getHidden() {
+        return hidden;
     }
 
-    public void setRequest(String request) {
-        this.request = request;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Integer getType() {
-        return type;
-    }
-
-    public void setType(Integer type) {
-        this.type = type;
-    }
-
-    public Integer getSort() {
-        return sort;
-    }
-
-    public void setSort(Integer sort) {
-        this.sort = sort;
+    public void setHidden(Integer hidden) {
+        this.hidden = hidden;
     }
 
     public Integer getSysDel() {
@@ -188,16 +124,10 @@ public class UmsResource implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", pid=").append(pid);
-        sb.append(", code=").append(code);
         sb.append(", name=").append(name);
         sb.append(", url=").append(url);
-        sb.append(", menuId=").append(menuId);
         sb.append(", isactive=").append(isactive);
-        sb.append(", request=").append(request);
-        sb.append(", description=").append(description);
-        sb.append(", type=").append(type);
-        sb.append(", sort=").append(sort);
+        sb.append(", hidden=").append(hidden);
         sb.append(", sysDel=").append(sysDel);
         sb.append(", sysCreateUser=").append(sysCreateUser);
         sb.append(", sysCreateTime=").append(sysCreateTime);
