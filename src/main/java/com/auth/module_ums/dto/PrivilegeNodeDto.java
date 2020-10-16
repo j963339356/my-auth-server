@@ -9,10 +9,12 @@ public class PrivilegeNodeDto {
     private String name;
     @ApiModelProperty(value="父节点")
     private String pid;
+    @ApiModelProperty(value = "所属模块")
+    private String moduleId;
     @ApiModelProperty(value="类型：0：模块，1：一级菜单，2：二级菜单，3：资源")
     private int type;
     @ApiModelProperty(value="是否选择")
-    private int checked;
+    private Boolean checked = false;
 
     public String getId() {
         return id;
@@ -46,11 +48,19 @@ public class PrivilegeNodeDto {
         this.type = type;
     }
 
-    public int getChecked() {
+    public Boolean getChecked() {
         return checked;
     }
 
-    public void setChecked(int checked) {
+    public void setChecked(Boolean checked) {
         this.checked = checked;
+    }
+
+    public String getModuleId() {
+        return moduleId;
+    }
+
+    public void setModuleId(String moduleId) {
+        this.moduleId = moduleId;
     }
 }

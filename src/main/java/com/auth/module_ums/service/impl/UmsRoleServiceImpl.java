@@ -175,31 +175,34 @@ public class UmsRoleServiceImpl implements UmsRoleService {
             dto.setType(0);
             privilegeNodeDtoList.add(dto);
             for (PrivilegeAllocateDto menu :menuList) {
-                if(menu.getModuleId().equals(dto.getId())) {
+                if(menu.getModuleId().equals(module.getModuleId())) {
                     PrivilegeNodeDto dto1 = new PrivilegeNodeDto();
                     dto1.setId(menu.getMenuId());
                     dto1.setPid(dto.getId());
+                    dto1.setModuleId(module.getModuleId().toString());
                     dto1.setName(menu.getMenuTitle());
                     dto1.setType(1);
                     privilegeNodeDtoList.add(dto1);
-                }
-                for (PrivilegeAllocateDto menu2 :menu2List) {
-                    if(menu2.getMenuId().equals(menu.getMenuId())){
-                        PrivilegeNodeDto dto2 = new PrivilegeNodeDto();
-                        dto2.setId(menu2.getMenu2Id());
-                        dto2.setPid(menu.getMenuId());
-                        dto2.setName(menu2.getMenu2Title());
-                        dto2.setType(2);
-                        privilegeNodeDtoList.add(dto2);
-                    }
-                    for (PrivilegeAllocateDto resource :resourceList) {
-                        if(resource.getMenu2Id().equals(menu2.getMenu2Id())) {
-                            PrivilegeNodeDto dto3 = new PrivilegeNodeDto();
-                            dto3.setId(resource.getResourceId());
-                            dto3.setPid(menu2.getMenu2Id());
-                            dto3.setName(resource.getResourceName());
-                            dto3.setType(3);
-                            privilegeNodeDtoList.add(dto3);
+                    for (PrivilegeAllocateDto menu2 :menu2List) {
+                        if(menu2.getMenuId().equals(menu.getMenuId())){
+                            PrivilegeNodeDto dto2 = new PrivilegeNodeDto();
+                            dto2.setId(menu2.getMenu2Id());
+                            dto2.setPid(menu.getMenuId());
+                            dto2.setModuleId(menu.getModuleId().toString());
+                            dto2.setName(menu2.getMenu2Title());
+                            dto2.setType(2);
+                            privilegeNodeDtoList.add(dto2);
+                            for (PrivilegeAllocateDto resource :resourceList) {
+                                if(resource.getMenu2Id().equals(menu2.getMenu2Id())) {
+                                    PrivilegeNodeDto dto3 = new PrivilegeNodeDto();
+                                    dto3.setId(resource.getResourceId());
+                                    dto3.setPid(menu2.getMenu2Id());
+                                    dto3.setModuleId(module.getModuleId().toString());
+                                    dto3.setName(resource.getResourceName());
+                                    dto3.setType(3);
+                                    privilegeNodeDtoList.add(dto3);
+                                }
+                            }
                         }
                     }
                 }
