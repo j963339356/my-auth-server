@@ -2,8 +2,11 @@ package com.auth.module_ums.service.impl;
 
 import com.auth.common.CommonPage;
 import com.auth.mbg.mapper.UmsRoleMapper;
+import com.auth.mbg.mapper.UmsRoleResourceRelationMapper;
 import com.auth.mbg.model.UmsRole;
 import com.auth.mbg.model.UmsRoleExample;
+import com.auth.mbg.model.UmsRoleResourceRelation;
+import com.auth.mbg.model.UmsRoleResourceRelationExample;
 import com.auth.module_ums.dao.PrivilegeAllocateDao;
 import com.auth.module_ums.dto.PrivilegeAllocateDto;
 import com.auth.module_ums.dto.PrivilegeNodeDto;
@@ -24,6 +27,8 @@ public class UmsRoleServiceImpl implements UmsRoleService {
     private UmsRoleMapper umsRoleMapper;
     @Autowired
     private PrivilegeAllocateDao privilegeAllocateDao;
+    @Autowired
+    private UmsRoleResourceRelationMapper roleResourceRelationMapper;
 
     /**
      * 添加角色
@@ -220,5 +225,54 @@ public class UmsRoleServiceImpl implements UmsRoleService {
             }
         }
         return privilegeNodeDtoList;
+    }
+
+    /**
+     * 分配权限
+     */
+    @Override
+    public int grantPrivileges(Long roleId,List<PrivilegeNodeDto> privilegeList){
+        //先删除当前角色的所有权限再分配
+        UmsRoleResourceRelationExample example = new UmsRoleResourceRelationExample();
+        example.createCriteria().andRoleIdEqualTo(roleId);
+        List<UmsRoleResourceRelation> roleResourceList = roleResourceRelationMapper.selectByExample(example);
+
+        //删除未选择的权限
+        for( UmsRoleResourceRelation relation : roleResourceList){
+            boolean isDel = true;
+            for( PrivilegeNodeDto nodeDto : privilegeList ){
+                if( relation.getResourceId().equals(nodeDto.getId())){
+                    isDel = false;
+                }
+            }
+            if(isDel) { roleResourceRelationMapper.deleteByPrimaryKey(relation.getId()); }
+        }
+        //插入已选择的权限
+        for( PrivilegeNodeDto nodeDto : privilegeList ){
+            boolean isInsert = true;
+            for( UmsRoleResourceRelation relation : roleResourceList ){
+                if( relation.getResourceId().equals(nodeDto.getId())){
+                    isInsert = false;
+                }
+            }
+            if(isInsert) {
+                UmsRoleResourceRelation relation = new UmsRoleResourceRelation();
+                relation.setRoleId(roleId);
+                relation.setResourceId(nodeDto.getId());
+                relation.setSysCreateTime(new Date());
+                roleResourceRelationMapper.insertSelective(relation);
+            }
+        }
+        return privilegeList.size();
+    }
+
+    /**
+     * 获取已分配权限
+     */
+    @Override
+    public List<UmsRoleResourceRelation> hasGrantPrivileges(Long roleId){
+        UmsRoleResourceRelationExample example = new UmsRoleResourceRelationExample();
+        example.createCriteria().andRoleIdEqualTo(roleId);
+        return roleResourceRelationMapper.selectByExample(example);
     }
 }

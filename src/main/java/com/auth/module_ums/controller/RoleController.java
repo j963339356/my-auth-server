@@ -5,6 +5,7 @@ import com.auth.common.CommonPage;
 import com.auth.common.CommonResult;
 import com.auth.common.ResultCodeEnum;
 import com.auth.mbg.model.UmsRole;
+import com.auth.mbg.model.UmsRoleResourceRelation;
 import com.auth.module_ums.dto.PrivilegeNodeDto;
 import com.auth.module_ums.service.UmsRoleService;
 import io.swagger.annotations.Api;
@@ -118,5 +119,20 @@ public class RoleController {
     @ResponseBody
     public CommonResult<List<PrivilegeNodeDto>> getPrivilegeAllocate(){
         return CommonResult.success(umsRoleService.getPrivilegeAllocate());
+    }
+
+    @ApiOperation("分配权限")
+    @RequestMapping(value = "/grantPrivileges/{roleId}", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult<Object> grantPrivileges(@PathVariable("roleId") Long roleId,
+                                                @RequestBody List<PrivilegeNodeDto> privilegeNodeDtoList){
+        return CommonResult.success(umsRoleService.grantPrivileges(roleId,privilegeNodeDtoList));
+    }
+
+    @ApiOperation("获取已分配权限")
+    @RequestMapping(value = "/hasGrantPrivileges/{roleId}", method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult<List<UmsRoleResourceRelation>> hasGrantPrivileges(@PathVariable("roleId") Long roleId){
+        return CommonResult.success(umsRoleService.hasGrantPrivileges(roleId));
     }
 }
